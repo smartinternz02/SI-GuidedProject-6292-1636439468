@@ -1,0 +1,33 @@
+#include<Servo.h>
+Servo s;
+void setup()
+{
+ pinMode(3, OUTPUT);
+ pinMode(4, INPUT);
+ Serial.begin(9600);
+ s.attach(5);
+}
+void loop()
+{
+digitalWrite(3, LOW);
+delayMicroseconds(2);
+digitalWrite(3, HIGH);
+delayMicroseconds(10);
+digitalWrite(3, LOW);
+ 
+float duration = pulseIn(4, HIGH);
+float distance= duration*0.034/2;
+Serial.print("Distance: ");
+Serial.println(distance);
+  if (distance<25){
+ for(int i=0;i<=180;i++){
+ s.write(i);
+ delay(50);}
+ delay(200);
+ Serial.print("Vehicle has approached, Opening Gate!!");
+ for(int j=180;j>=0;j--){
+ s.write(j);
+ delay(50);}
+ delay(200);
+ }
+}
